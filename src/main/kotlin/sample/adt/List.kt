@@ -46,13 +46,13 @@ sealed class List<out A> {
     
  
     
-    fun flatMap(f: (a: A) -> List<@UnsafeVariance A> ): List<A> {
+    fun flatMap(f: (a: A) -> List<@UnsafeVariance A>): List<A> {
         return flatten(map { a -> f(a) })
     }
     
     companion object {
         fun <A> flatten(l: List<List<A>>): List<A> {
-            return l.foldRight(Nil as List<A>, {a, b -> a.append(b)})
+            return l.foldRight(Nil as List<A>, { a, b -> a.append(b)})
         }
     }
 }
