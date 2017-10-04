@@ -17,7 +17,7 @@ class ListTest {
     
     @Test
     fun createAListVarargs() {
-        var l = list(1, 2, 3, 4)
+        val l = list(1, 2, 3, 4)
         assertThat(l.head).isEqualTo(1)
         assertThat(l.tail).isEqualTo(Cons(2, Cons(3, Cons(4, Nil))))
         assertThat(l.tail.head).isEqualTo(2)        
@@ -51,11 +51,18 @@ class ListTest {
     }
     
     @Test
-    fun append() {
+    fun appendTwoLists() {
         val l1 = list(1, 2, 3)
         val l2 = list(4, 5, 6)
         
         assertThat(l1.append(l2)).isEqualTo(list(1, 2, 3, 4, 5, 6))
+    }
+    
+    @Test
+    fun reverseAList() {
+        val l = list("a", "b", "c")
+        
+        assertThat(l.reverse()).isEqualTo(list("c", "b", "a"))
     }
 
     @Test

@@ -9,7 +9,11 @@ fun <A> list(vararg arr: A): List<A> {
 }
 
 sealed class List<out A> {
-    abstract fun size(): Int
+
+    abstract val head: A
+
+    abstract val tail: List<A>
+    
     fun <B> map(f: (A) -> B): List<B> {
         return when (this) {
             is Cons -> Cons(f(head), tail.map(f))
@@ -17,16 +21,15 @@ sealed class List<out A> {
         }
     }
 
-    abstract val head: A
-
-    abstract val tail: List<A>
-
-
     fun <B> foldLeft(z: B, f: (B, A) -> B): B {
-        return when (this) {
-            is Nil -> z
-            is Cons -> tail.foldLeft(f(z, head), f)
+        tailrec fun foldLeft(l: List<A>, z: B, f: (B, A) -> B): B {
+            return when(l) {
+                is Nil -> z
+                is Cons -> foldLeft(l.tail, f(z, l.head), f)
+            }
         }
+        
+        return foldLeft(this, z, f)
     }
 
     fun reverse(): List<A> {
@@ -36,6 +39,8 @@ sealed class List<out A> {
     fun <B> foldRight(z: B, f: (A, B) -> B): B {
         return reverse().foldLeft(z, { b, a -> f(a, b) })
     }
+
+    fun size(): Int = foldRight(0, {_, r -> r + 1})
 
     fun append(l: List<@UnsafeVariance A>): List<A> {
         return when (this) {
@@ -59,9 +64,9 @@ sealed class List<out A> {
 
 
 
-object Nil : List<Nothing>() {
-    override fun size(): Int = 0
+data class Cons<out T>(override val head: T, override val tail: List<T>) : List<T>()
 
+object Nil : List<Nothing>() {
     override val head: Nothing
         get() {
             throw NoSuchElementException("head of empty list")
@@ -71,15 +76,11 @@ object Nil : List<Nothing>() {
         get() {
             throw NoSuchElementException("tail of empty list")
         }
+
+    override fun toString(): String {
+        return "Nil"
+    }
 }
-
-data class Cons<out T>(override val head: T, override val tail: List<T>) : List<T>() {
-
-    override fun size(): Int =
-            1 + tail.size()
-
-}
-
 
 
 
