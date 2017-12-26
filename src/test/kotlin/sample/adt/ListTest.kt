@@ -19,7 +19,7 @@ class ListTest {
 
     @Test
     fun createAListVarargs() {
-        val l = list(1, 2, 3, 4)
+        val l = List(1, 2, 3, 4)
         assertThat(l.head).isEqualTo(1)
         assertThat(l.tail).isEqualTo(Cons(2, Cons(3, Cons(4, Nil))))
     }
@@ -33,14 +33,14 @@ class ListTest {
 
     @Test
     fun dropElements() {
-        val l = list(4, 3, 2, 1)
-        assertThat(l.drop(2)).isEqualTo(list(2, 1))
+        val l = List(4, 3, 2, 1)
+        assertThat(l.drop(2)).isEqualTo(List(2, 1))
     }
 
     @Test
     fun dropWhile() {
-        val l = list(1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
-        assertThat(l.dropWhile({ e -> e < 20 })).isEqualTo(list(21, 34, 55, 89))
+        val l = List(1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
+        assertThat(l.dropWhile({ e -> e < 20 })).isEqualTo(List(21, 34, 55, 89))
     }
 
     @Test
@@ -61,16 +61,16 @@ class ListTest {
 
     @Test
     fun reverseAList() {
-        val l = list("a", "b", "c")
-        assertThat(l.reverse()).isEqualTo(list("c", "b", "a"))
+        val l = List("a", "b", "c")
+        assertThat(l.reverse()).isEqualTo(List("c", "b", "a"))
     }
     
     @Test
     fun appendTwoLists() {
-        val l1: List<Number> = list(1, 2, 3)
-        val l2 = list(4.1, 5.1, 6.1)
+        val l1: List<Number> = List(1, 2, 3)
+        val l2 = List(4.1, 5.1, 6.1)
 
-        assertThat(l1.append(l2)).isEqualTo(list(1, 2, 3, 4.1, 5.1, 6.1))
+        assertThat(l1.append(l2)).isEqualTo(List(1, 2, 3, 4.1, 5.1, 6.1))
     }
 
     @Test
@@ -94,14 +94,14 @@ class ListTest {
 
     @Test
     fun testFlatten() {
-        val l = list(list(1, 2), list(3, 4))
-        assertThat(List.flatten(l)).isEqualTo(list(1, 2, 3, 4))
+        val l = List(List(1, 2), List(3, 4))
+        assertThat(List.flatten(l)).isEqualTo(List(1, 2, 3, 4))
     }
 
     @Test
     fun flatMapElements() {
         val l = Cons(1, Cons(2, Cons(3, Nil)))
-        val l2 = l.flatMap { e -> list(e.toString(), e.toString()) }
+        val l2 = l.flatMap { e -> List(e.toString(), e.toString()) }
 
         assertThat(l2)
                 .isEqualTo(

@@ -1,15 +1,7 @@
 package sample.adt
 
-fun <A> list(vararg arr: A): List<A> {
-    var l: List<A> = Nil
-    for (i in arr.reversed()) {
-        l = Cons(i, l)
-    }
-    return l
-}
-
 sealed class List<out A> {
-
+    
     abstract val head: A
 
     abstract val tail: List<A>
@@ -79,6 +71,14 @@ sealed class List<out A> {
     companion object {
         fun <A> flatten(l: List<List<A>>): List<A> {
             return l.foldRight(Nil as List<A>, { a, b -> a.append(b) })
+        }
+
+        operator fun <A> invoke(vararg arr: A): List<A> {
+            var l: List<A> = Nil
+            for (i in arr.reversed()) {
+                l = Cons(i, l)
+            }
+            return l
         }
     }
 }
