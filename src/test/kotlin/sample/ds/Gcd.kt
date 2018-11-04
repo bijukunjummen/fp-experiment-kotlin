@@ -1,4 +1,4 @@
-package sample.adt
+package sample.ds
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -8,9 +8,9 @@ import java.util.stream.Stream
 
 tailrec fun gcd(a: Int, b: Int): Int {
     val r = a % b
-    when (r) {
-        0 -> return b
-        else -> return gcd(b, r)
+    return when (r) {
+        0 -> b
+        else -> gcd(b, r)
     }
 }
 

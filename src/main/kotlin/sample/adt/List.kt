@@ -81,26 +81,28 @@ sealed class List<out A> {
             return l
         }
     }
-}
+    
+    data class Cons<out T>(override val head: T, override val tail: List<T>) : List<T>()
 
+    object Nil : List<Nothing>() {
+        override val head: Nothing
+            get() {
+                throw NoSuchElementException("head of empty list")
+            }
 
-data class Cons<out T>(override val head: T, override val tail: List<T>) : List<T>()
+        override val tail: List<Nothing>
+            get() {
+                throw NoSuchElementException("tail of empty list")
+            }
 
-object Nil : List<Nothing>() {
-    override val head: Nothing
-        get() {
-            throw NoSuchElementException("head of empty list")
+        override fun toString(): String {
+            return "Nil"
         }
-
-    override val tail: List<Nothing>
-        get() {
-            throw NoSuchElementException("tail of empty list")
-        }
-
-    override fun toString(): String {
-        return "Nil"
     }
 }
+
+
+
 
 
 
