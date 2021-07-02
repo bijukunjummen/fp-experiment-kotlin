@@ -81,17 +81,17 @@ class TryTypeTest {
         assertThat(getResult.isFailure()).isTrue()
     }
 
-    fun getFromARemoteUrl(url: URL): Try<String> {
+    private fun getFromARemoteUrl(url: URL): Try<String> {
         return Try.success("a result")
     }
 
-    fun parseUrl(url: String): Try<URL> {
+    private fun parseUrl(url: String): Try<URL> {
         return Try.of {
             URL(url)
         }
     }
 
-    fun get(endpoint: URI): Try<String> {
+    private fun get(endpoint: URI): Try<String> {
         val httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_1_1)
             .connectTimeout(Duration.ofSeconds(30))
